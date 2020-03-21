@@ -20,13 +20,13 @@ function drawVisualization()
             // title: 'Casos COVID-19 em Países ao longo dos dias',
             titleTextStyle : {color: 'black', fontSize: 18},
             // scaleType: 'log',
-            // vAxis: {
-            //     viewWindow: {
-            //         min: 0,
-            //         max: 10000
-            //     },
-            //     ticks: [0, 2500, 5000, 7500, 1000] // display labels every 25
-            // },
+            vAxis: {
+                viewWindow: {
+                    min: 0,
+                    max: 10000
+                },
+                ticks: [0, 2500, 5000, 7500, 10000] // display labels every 25
+            },
             explorer: {
                maxZoomOut:2,
                keepInBounds: false
@@ -34,5 +34,11 @@ function drawVisualization()
          }
       });
       df_casos.draw();
+      // Create and draw the visualization.
+      // new google.visualization.LineChart(document.getElementById('mundial-no-china')).
+      // draw(data,options);
    });
 }
+// $(window).on("throttledresize", function (event) {
+//     drawVisualization();
+// });

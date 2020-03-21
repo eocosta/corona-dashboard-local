@@ -23,9 +23,9 @@ function drawVisualization()
             vAxis: {
                 viewWindow: {
                     min: 0,
-                    max: 10000
+                    max: 20000
                 },
-                ticks: [0, 2500, 5000, 7500, 10000] // display labels every 25
+                // ticks: [0, 2500, 5000, 7500, 10000] // display labels every 25
             },
             explorer: {
                maxZoomOut:2,
