@@ -13,6 +13,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="jquery.csv.min.js"></script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script src="https://apis.google.com/js/client.js"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -105,14 +106,94 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
                                     <div class="card-header text-uppercase">Casos Suspeitos</div>
-                                    <div class="card-body">XXXXX</div>
+                                    	<div class="card-body">XXXXX
+                                		</div>
                                     <div class="d-flex align-items-center justify-content-between"></div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-header text-uppercase">Casos Confirmados</div>
-                                    <div class="card-body">XXXXX</div>
+                                    <div class="card-body" id='casosconfirmados'>
+                                    	<script type="text/javascript">
+										    function makeApiCall() {
+												var params = {
+													// The ID of the spreadsheet to retrieve data from.
+													spreadsheetId: '1a6xR0muTAzpd7wBA6LqyeuNe1rgQQlmJz3QSLvbrY_8',  // TODO: Update placeholder value.
+
+													// The A1 notation of the values to retrieve.
+													range: 'dados_sumario_21032020!B5',  // TODO: Update placeholder value.
+
+													// How values should be represented in the output.
+													// The default render option is ValueRenderOption.FORMATTED_VALUE.
+													//valueRenderOption: '',  // TODO: Update placeholder value.
+
+													// How dates, times, and durations should be represented in the output.
+													// This is ignored if value_render_option is
+													// FORMATTED_VALUE.
+													// The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].
+													//dateTimeRenderOption: '',  // TODO: Update placeholder value.
+													//majorDimension : ROWS',
+												};
+
+												var request = gapi.client.sheets.spreadsheets.values.get(params);
+												request.then(function(response) {
+												// TODO: Change code below to process the `response` object:
+												console.log(response.result.values[0]);
+												// Show response.result inside div
+												document.getElementById('casosconfirmados').innerHTML = response.result.values[0]; 
+												}, function(reason) {
+												console.error('error: ' + reason.result.error.message);
+												});
+										    }
+
+										    function initClient() {
+												var API_KEY = 'AIzaSyDbT5pbTxfM-6w8ktRIiyfqsvlsBEgiRvU';  // TODO: Update placeholder with desired API key.
+
+												var CLIENT_ID = '1076437818477-m1lmdidfk82h2k83thgjpokcmtd0mrf0.apps.googleusercontent.com';  // TODO: Update placeholder with desired client ID.
+
+												// TODO: Authorize using one of the following scopes:
+												//   'https://www.googleapis.com/auth/drive'
+												//   'https://www.googleapis.com/auth/drive.file'
+												//   'https://www.googleapis.com/auth/drive.readonly'
+												//   'https://www.googleapis.com/auth/spreadsheets'
+												//   'https://www.googleapis.com/auth/spreadsheets.readonly'
+												var SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly';
+
+												gapi.client.init({
+												'apiKey': API_KEY,
+												'clientId': CLIENT_ID,
+												'scope': SCOPES,
+												'discoveryDocs': ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+												}).then(function() {
+												gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
+												updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+												});
+										    }
+
+										    function handleClientLoad() {
+										    	gapi.load('client:auth2', initClient);
+										    }
+
+										    function updateSignInStatus(isSignedIn) {
+												if (isSignedIn) {
+													makeApiCall();
+												}
+										    }
+
+										    function handleSignInClick(event) {
+										    	gapi.auth2.getAuthInstance().signIn();
+										    }
+
+										    function handleSignOutClick(event) {
+										    	gapi.auth2.getAuthInstance().signOut();
+										    }
+									    </script>
+									    <script async defer src="https://apis.google.com/js/api.js"
+									    	onload="this.onload=function(){};handleClientLoad()"
+									    	onreadystatechange="if (this.readyState === 'complete') this.onload()">
+									    </script>
+                                    </div>
                                     <div class="d-flex align-items-center justify-content-between"></div>
                                 </div>
                             </div>
@@ -154,7 +235,7 @@
                                             }
                                         </script> -->
                                         <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1beOA-3-c3E5Z0LzdcSq6xNQUazE7gfHp" width="100%" height="100%"></iframe>
-                                        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcnZLnOdiRwZUK6Lpw4CUWTwBPNvO415w&callback=initMap"></script>
+                                        <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcnZLnOdiRwZUK6Lpw4CUWTwBPNvO415w&callback=initMap"></script> -->
                                     </div>
                                 </div>
                             </div>
